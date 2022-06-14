@@ -79,3 +79,21 @@ body[data-theme="light"] {
   border-radius: 5px transparent;
   outline: none;
 }
+
+.card-todo{
+  width: 50vw;
+  height:auto;
+  padding: 1rem 10px 10px 10px;
+  border:1px solid grey;
+  border-radius: 5px;
+}
+
+.card-todo p, h1 {
+  color:var(--bg-color);
+}
+.card-todo p{
+  font-size:3.75vw;
+}
+.card-todo h1{
+  font-size: 8vw;
+}
