@@ -12,9 +12,12 @@ addTaskButton.addEventListener("click", (e) => {
     alert("Insira um todo.");
   } else {
     VerifyTodos();
-    saveInd !== undefined
-      ? SaveTodo(text.value, saveInd)
-      : SaveTodo(text.value);
+    if (saveInd !== undefined) {
+      SaveTodo(text.value, saveInd);
+      saveInd = undefined;
+    } else {
+      SaveTodo(text.value);
+    }
     displayTodos();
   }
 });
@@ -33,13 +36,18 @@ const displayTodos = () => {
 
   todoList.forEach((todo, i) => {
     htmlCode += `
-            <div>
+            <div class ="card-todo">
 
-            <p>${todo}</p>
+            <h1>${todo}</h1>
 
-            <button onclick='EditTodo(${i})'>Editar</button>
 
-            <button onclick='DeleteTodo(${i})'>Excluir</button>
+            <div class="options">
+              <input class="item" type ="checkbox" id="${i}"/>
+
+              <a class="item" onclick='EditTodo(${i})'> <img src="assets/img/pencil_black.png"></a>
+
+              <a class="item" onclick='DeleteTodo(${i})'><img src="assets/img/bin.png"></a>
+            </div>
 
             </div>
         `;

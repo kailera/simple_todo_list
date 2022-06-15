@@ -80,20 +80,38 @@ body[data-theme="light"] {
   outline: none;
 }
 
-.card-todo{
-  width: 50vw;
-  height:auto;
-  padding: 1rem 10px 10px 10px;
-  border:1px solid grey;
+.card-todo {
+  width: 30vw;
+  height: auto;
+  margin: 1.5rem;
+  padding: 10px 5px;
+  border: 1px solid grey;
   border-radius: 5px;
 }
 
-.card-todo p, h1 {
-  color:var(--bg-color);
+.card-todo p,
+h1 {
+  color: var(--bg-color);
 }
-.card-todo p{
-  font-size:3.75vw;
+.card-todo p {
+  font-size: 3.75vw;
 }
-.card-todo h1{
-  font-size: 8vw;
+.card-todo h1 {
+  font-size: 5vw;
+}
+
+.options {
+  padding: 8px 2px;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.options .item {
+  margin-left: 0.85rem;
+  width: 1.5vw;
+  height: 1.5vh;
+}
+
+.item img {
+  width: 100%;
 }
