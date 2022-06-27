@@ -23,7 +23,20 @@ addTaskButton.addEventListener("click", (e) => {
 });
 
 const SaveTodo = (item, i) => {
-  i !== undefined ? (todoList[i] = item) : todoList.push(item);
+  if (i !== undefined) {
+    todoList.map((todo) => {
+      if (todo.id == i) {
+        todo.item = item;
+      }
+    });
+  } else {
+    const todo = {
+      item,
+      checked: false,
+      id: Date.now(),
+    };
+    todoList.push(todo);
+  }
 
   text.value = "";
   localStorage.setItem("todosList", JSON.stringify(todoList));
@@ -35,18 +48,19 @@ const displayTodos = () => {
   let htmlCode = "";
 
   todoList.forEach((todo, i) => {
+    const isChecked = todo.checked ? "done" : "";
     htmlCode += `
-            <div class ="card-todo">
+            <div class ="card-todo ${isChecked}">
 
-            <h1>${todo}</h1>
+            <h1>${todo.item}</h1>
 
 
             <div class="options">
-              <input class="item" type ="checkbox" id="${i}"/>
+              <input class="item tick"  type ="checkbox" id="${todo.id}"/>
 
-              <a class="item" onclick='EditTodo(${i})'> <img src="assets/img/pencil_black.png"></a>
+              <a class="item" onclick='EditTodo(${todo.id})'> <img src="assets/img/pencil_black.png"></a>
 
-              <a class="item" onclick='DeleteTodo(${i})'><img src="assets/img/bin.png"></a>
+              <a class="item" onclick='DeleteTodo(${todo.id})'><img src="assets/img/bin.png"></a>
             </div>
 
             </div>
@@ -66,16 +80,45 @@ const VerifyTodos = () => {
   }
 };
 
-const DeleteTodo = (index) => {
-  let todo = localStorage.getItem("todosList");
-  todoList = JSON.parse(todo);
-  todoList.splice(index, 1);
+listBox.addEventListener("click", (e) => {
+  const hasClass = e.target.classList.contains("tick");
+  console.log(hasClass);
+  if (hasClass) {
+    const itemKey = e.target.id;
+    console.log(itemKey);
+    toogleDone(itemKey);
+  }
+});
+
+const toogleDone = (key) => {
+  const index = todoList.findIndex((todo) => todo.id === Number(key));
+  console.log(index);
+  todoList[index].checked = !todoList[index].checked;
   localStorage.setItem("todosList", JSON.stringify(todoList));
   displayTodos();
 };
 
-const EditTodo = (i) => {
-  let todo = JSON.parse(localStorage.getItem("todosList"));
-  text.value = todo[i];
-  saveInd = i;
+const DeleteTodo = (index) => {
+  console.log("start delete");
+  //let todo = localStorage.getItem("todosList");
+  //todoList = JSON.parse(todo);
+  todoList.splice(
+    todoList.find((todo) => todo.id == index),
+    1
+  );
+  localStorage.setItem("todosList", JSON.stringify(todoList));
+  text.value = "";
+  displayTodos();
 };
+
+const EditTodo = (id) => {
+  console.log(todoList);
+  const queryTodo = todoList.find((todo) => {
+    return todo.id == id;
+  });
+  console.log(queryTodo.item);
+  text.value = queryTodo.item;
+  saveInd = queryTodo.id;
+};
+
+displayTodos();
